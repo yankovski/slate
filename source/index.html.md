@@ -1,14 +1,12 @@
 ---
-title: API Reference
+title: Playce API Reference
 
 language_tabs:
   - shell
-  - ruby
-  - python
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
+  - <a href='https://github.com/gigster-eng/playce_api'>Playce API Github</a>
+  - Any questions? Slack @my
 
 includes:
   - errors
@@ -18,151 +16,189 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the Playce API! API is meant to be used by the Playce iOS and Android apps.
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+To start only Shell examples are provided, but my plan is to extend to Ruby as well! You can view code examples in the dark area to the right.
 
-This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+
 
 # Authentication
 
 > To authorize, use this code:
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
-
 ```shell
-# With shell, you can just pass the correct header with each request
+# With all endpoints, you can just pass the correct header with each request
 curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+  -H "Authorization: mysupersecrettokenhere"
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+Playce uses Authorization header to control access to the different routes.
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+Auth token (obtained by logging in) is expected to be included in most API requests to the server in a header that looks like the following:
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
+`Authorization: mysupersecrettokenhere`
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+You must replace <code>mysupersecrettokenhere</code> with your personal API key.
 </aside>
 
-# Kittens
+# Sessions
 
-## Get All Kittens
+## Authenticating
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+`POST /api/sessions`
 
 ```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
+curl "/sessions"
+  -d session[email]="user@example.com"
+  -d session[password]="letmein"
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "id": 3,
+  "email": "user@example.com",
+  "auth_token": "s8UpRifGis6Lwq22gxnL",
+  "created_at": "2016-05-19T03:06:33.688Z",
+  "updated_at": "2016-05-19T17:12:36.817Z"
 }
 ```
 
-This endpoint retrieves a specific kitten.
+> The above command returns JSON structured like this when invalid:
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+```json
+{
+  "errors": "Invalid email or password"
+}
+```
 
-### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+## Signing out
+
+`DELELE /sessions/<id>`
+
+
+```shell
+curl "/sessions/<id>"
+  -H "Authorization: mysupersecrettokenhere"
+  -X DELETE
+```
+
+> The above command returns status 204 when the user is found and signed out
+
+
+
+# Users
+
+## Index
+This is the root api welcome message
+
+`GET /users`
+
+```shell
+curl "/users"
+  -H "Authorization: mysupersecrettokenhere"
+```
+
+> The above command returns JSON structured like this when correct:
+
+```json
+{
+  "message": "Hello"
+}
+```
+
+## Show
+
+`GET /users/<id>`
+
+```shell
+curl "/users/<id>"
+  -H "Authorization: mysupersecrettokenhere"
+```
+
+> The above command returns JSON structured like this when correct:
+
+```json
+{
+  "id": 1,
+  "email": "user1@example.com",
+  "last_sign_in_at": "2016-05-19T21:40:22.532Z",
+  "auth_token": "mysupersecrettokenhere",
+  "created_at": "2016-05-19T03:17:23.514Z",
+  "updated_at": "2016-05-19T21:40:22.573Z"
+}
+```
+
+## Create
+Creating a user
+
+`POST /users`
+
+```shell
+curl "/users"
+  -d user[email]="user555@example.com"
+  -d user[password]="password"
+  -d user[password_confirmation]="password"
+```
+
+> The above command returns JSON structured like this when correct:
+
+```json
+{
+  "id": 11,
+  "email": "user10@example.com",
+  "last_sign_in_at": null,
+  "auth_token": "a5LsvBLgPe4RufgXyHcm",
+  "created_at": "2016-05-19T21:43:48.622Z",
+  "updated_at": "2016-05-19T21:43:48.622Z"
+}
+```
+
+## Update
+Updating a user
+
+`PATCH /users/<id>`
+
+```shell
+curl "/users/<id>"
+  -H "Authorization: somerandomtoken"
+  -d user[email]="newemail@example.com"
+  --request PATCH
+```
+
+> The above command returns JSON structured like this when correct:
+
+```json
+{
+  "id": 11,
+  "email": "newemail@example.com",
+  "last_sign_in_at": null,
+  "auth_token": "a5LsvBLgPe4RufgXyHcm",
+  "created_at": "2016-05-19T21:43:48.622Z",
+  "updated_at": "2016-05-19T21:50:47.472Z"
+}
+```
+
+## Destroy
+
+`DELELE /users/<id>`
+
+
+```shell
+curl "/users/<id>"
+  -H "Authorization: mysupersecrettokenhere"
+  -X DELETE
+```
+
+> The above command returns status 204 when the user is found and destroyed
+
 
 ### URL Parameters
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the kitten to retrieve
+ID | The ID of the user
 
