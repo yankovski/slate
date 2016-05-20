@@ -88,7 +88,45 @@ curl "/sessions/<id>"
 
 > The above command returns status 204 when the user is found and signed out
 
+## Facebook
 
+This endpoint signs in an existing user with Facebook or creates a user and then signs them in.
+
+`POST /sessions/facebook`
+
+```shell
+curl "/sessions/facebook"
+  -d facebook_token="annoyinglylongfacebooktokenhere"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id": 13,
+  "email": "wldjqss_wongman_1351268732@tfbnw.net",
+  "last_sign_in_at": "2016-05-20T03:27:55.106Z",
+  "auth_token": "cJjkwDaDF6LYsudBybzz",
+  "created_at": "2016-05-20T03:14:39.894Z",
+  "updated_at": "2016-05-20T03:27:55.133Z"
+}
+```
+
+> The above command returns JSON structured like this when invalid:
+
+```json
+{
+  "errors": "Invalid Facebook token"
+}
+```
+
+> Or like this when email is not shared:
+
+```json
+{
+  "error": "Validation failed: Email can't be blank"
+}
+```
 
 # Users
 
