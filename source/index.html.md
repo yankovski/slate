@@ -44,9 +44,27 @@ You must replace <code>mysupersecrettokenhere</code> with your personal API key.
 
 # Sessions
 
+## Environment
+
+This endpoint returns environment-specific information that the clients may need. This is better than storing such information on the client permanently.
+
+`GET /sessions/environment`
+
+```shell
+curl "/sessions/environment"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "spotify_client_id": "14d415257d794e76949f6e4f8b8fa34b"
+}
+```
+
 ## Authenticating
 
-`POST /api/sessions`
+`POST /sessions`
 
 ```shell
 curl "/sessions"
@@ -233,10 +251,45 @@ curl "/users/<id>"
 
 > The above command returns status 204 when the user is found and destroyed
 
+# Providers
+
+This is how the API supports connecting to different external providers.
+
+## Spotify
+
+`POST /providers/spotify`
+
+```shell
+curl "/providers/spotify"
+  -H "Authorization: mysupersecrettokenhere"
+  -d code="AQDUvJsv0CBnDKz3HBfKkXablig"
+  -d uri="https://www.example.com/spotify/callback"
+```
+
+> The above command returns status 200 when connection is successful
+
+```json
+```
+
+> The above command returns JSON structured like this when invalid:
+
+```json
+{
+  "error": "invalid_grant",
+  "error_description": "Authorization code expired"
+}
+```
+
+```json
+{
+  "error": "Failed to open TCP connection to accounts.spotify.com:443 (getaddrinfo: nodename nor servname provided, or not known)"
+}
+```
 
 ### URL Parameters
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the user
+code | Authorization code from spotify, to be exchanged for permanent access_token.
+callback_uri | Original uri sent to spotify when requesting code.
 
