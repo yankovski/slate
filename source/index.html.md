@@ -58,9 +58,10 @@ curl "/sessions/environment"
 
 ```json
 {
-  "spotify_client_id": "14d415257d794e76949f6e4f8b8fa34b"
-  "facebook_app_id": "1398162837618273"
-}}
+  "facebook_app_id": "1398162837618273",
+  "spotify_client_id": "14d415257d794e76949f6e4f8b8fa34b",
+  "youtube_client_id": "9827364793138-rjckfasfsadcqj9kgv2b0jjuragoo.apps.googleusercontent.com"
+}
 ```
 
 ## Authenticating
@@ -294,3 +295,35 @@ Parameter | Description
 code | Authorization code from spotify, to be exchanged for permanent access_token.
 callback_uri | Original uri sent to spotify when requesting code.
 
+
+## YouTube
+
+`POST /providers/youtube`
+
+```shell
+curl "/providers/youtube"
+  -H "Authorization: mysupersecrettokenhere"
+  -d code="lkfjpqlDAcCKddAmcmmskAkjahdsqwwqe"
+  -d uri="https://www.example.com/youtube/callback"
+```
+
+> The above command returns status 200 when connection is successful
+
+```json
+```
+
+> The above command returns JSON structured like this when invalid:
+
+```json
+{
+  "error": "invalid_grant",
+  "error_description": "Code was already redeemed."
+}
+```
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+code | Authorization code from youtube, to be exchanged for permanent access_token.
+callback_uri | Original uri sent to youtube when requesting code.
