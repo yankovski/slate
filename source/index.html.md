@@ -59,7 +59,8 @@ curl "/sessions/environment"
 ```json
 {
   "spotify_client_id": "14d415257d794e76949f6e4f8b8fa34b"
-}
+  "facebook_app_id": "1398162837618273"
+}}
 ```
 
 ## Authenticating
