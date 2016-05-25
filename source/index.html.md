@@ -265,7 +265,7 @@ This is how the API supports connecting to different external providers.
 curl "/providers/spotify"
   -H "Authorization: mysupersecrettokenhere"
   -d code="AQDUvJsv0CBnDKz3HBfKkXablig"
-  -d uri="https://www.example.com/spotify/callback"
+  -d callback_uri="https://www.example.com/spotify/callback"
 ```
 
 > The above command returns status 200 when connection is successful
@@ -304,7 +304,7 @@ callback_uri | Original uri sent to spotify when requesting code.
 curl "/providers/youtube"
   -H "Authorization: mysupersecrettokenhere"
   -d code="lkfjpqlDAcCKddAmcmmskAkjahdsqwwqe"
-  -d uri="https://www.example.com/youtube/callback"
+  -d callback_uri="https://www.example.com/youtube/callback"
 ```
 
 > The above command returns status 200 when connection is successful
