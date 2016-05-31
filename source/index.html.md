@@ -327,3 +327,32 @@ Parameter | Description
 --------- | -----------
 code | Authorization code from youtube, to be exchanged for permanent access_token.
 callback_uri | Original uri sent to youtube when requesting code.
+
+## Destroy
+
+`DELETE /providers/<provider>`
+
+```shell
+curl "/providers/<provider>"
+  -H "Authorization: mysupersecrettokenhere"
+  -X DELETE
+```
+
+> The above command returns status 200 and structure like this if successful
+
+```json
+{
+  "result": true
+}
+```
+
+> The above command returns status 401 and structure like this if unsuccessful
+
+```json
+{
+  "result": false
+}
+```
+
+### Supported providers
+`facebook`, `youtube`, `spotify`
