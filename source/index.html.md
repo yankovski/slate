@@ -257,6 +257,29 @@ curl "/users/<id>"
 
 This is how the API supports connecting to different external providers.
 
+## Index
+
+List the currently-connected providers for the logged in user (baed on token).
+
+`GET /providers`
+
+```shell
+curl "/providers"
+  -H "Authorization: mysupersecrettokenhere"
+```
+
+> The above command returns status 200 and structure like this if successful
+
+```json
+[
+  {
+    "provider": "spotify",
+    "created_at": "2016-05-23T03:37:57.195Z",
+    "updated_at": "2016-05-24T22:07:24.943Z"
+  }
+]
+```
+
 ## Spotify
 
 `POST /providers/spotify`
@@ -355,4 +378,4 @@ curl "/providers/<provider>"
 ```
 
 ### Supported providers
-`facebook`, `youtube`, `spotify`
+`facebook`, `youtube`, `spotify`... See full list from `GET /providers` call.
