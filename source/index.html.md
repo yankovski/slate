@@ -60,7 +60,8 @@ curl "/sessions/environment"
 {
   "facebook_app_id": "1398162837618273",
   "spotify_client_id": "14d415257d794e76949f6e4f8b8fa34b",
-  "youtube_client_id": "9827364793138-rjckfasfsadcqj9kgv2b0jjuragoo.apps.googleusercontent.com"
+  "youtube_client_id": "9827364793138-rjckfasfsadcqj9kgv2b0jjuragoo.apps.googleusercontent.com",
+  "soundcloud_client_id": "9akjsh3a6c1f7e901298347dd11f5341bf"
 }
 ```
 
@@ -273,6 +274,11 @@ curl "/providers"
 ```json
 [
   {
+    "provider": "soundcloud",
+    "created_at": "2016-06-02T21:44:07.029Z",
+    "updated_at": "2016-06-03T01:53:36.063Z"
+  },
+  {
     "provider": "spotify",
     "created_at": "2016-05-23T03:37:57.195Z",
     "updated_at": "2016-05-24T22:07:24.943Z"
@@ -351,6 +357,38 @@ Parameter | Description
 code | Authorization code from youtube, to be exchanged for permanent access_token.
 callback_uri | Original uri sent to youtube when requesting code.
 
+## SoundCloud
+
+`POST /providers/soundcloud`
+
+```shell
+curl "/providers/soundcloud"
+  -H "Authorization: mysupersecrettokenhere"
+  -d code="b123llkj1h23ljgfdsd5ce4e80cd4906"
+  -d callback_uri="https://www.example.com/soundcloud/callback"
+```
+
+> The above command returns status 200 when connection is successful
+
+```json
+```
+
+> The above command returns JSON structured like this when invalid:
+
+```json
+{
+  "error": "invalid_grant",
+  "error_description": "Authorization code expired"
+}
+```
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+code | Authorization code from soundcloud, to be exchanged for permanent access_token.
+callback_uri | Original uri sent to soundcloud when requesting code.
+
 ## Destroy
 
 `DELETE /providers/<provider>`
@@ -378,4 +416,4 @@ curl "/providers/<provider>"
 ```
 
 ### Supported providers
-`facebook`, `youtube`, `spotify`... See full list from `GET /providers` call.
+`facebook`, `youtube`, `spotify`, `soundcloud`... See full list from `GET /providers` call.
