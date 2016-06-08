@@ -417,3 +417,73 @@ curl "/providers/<provider>"
 
 ### Supported providers
 `facebook`, `youtube`, `spotify`, `soundcloud`... See full list from `GET /providers` call.
+
+# Lists
+
+Playce supports many providers and many types of lists. Favorites, Playlists, Channels, Albums, etc...
+In order to pull multiple lists from the API and display those in a unified list, we abstract everything into a single 'list' concept. Playce lists have a 'type' attribute, which can be used to identify the list type.
+
+## Index
+
+This returns all the lists for the current user.
+
+`GET /lists`
+
+```shell
+curl "/lists"
+  -H "Authorization: mysupersecrettokenhere"
+```
+
+> The above command returns status 200 and structure like this if successful
+
+```json
+{
+  "items": [
+    {
+      "id": 29,
+      "name": "Discover Weekly",
+      "provider": "spotify",
+      "external_id": "2e1FY03Oz92Tr3ll3uOFk5",
+      "external_type": "playlist",
+      "image_url": "https://u.scdn.co/images/pl/default/540efd75f5fc93c74787a375c39e4597c0975be8",
+      "num_items": 30
+    },
+    {
+      "id": 30,
+      "name": "G-DJ(merengue)",
+      "provider": "spotify",
+      "external_id": "4kD5uFCn1x7ueKHtD5qQd3",
+      "external_type": "playlist",
+      "image_url": "https://i.scdn.co/image/f371f5617776d602b510c2ec614d1d1ee0bf16f1",
+      "num_items": 3
+    },
+    {
+      "id": 31,
+      "name": "G-Junior(salsa)",
+      "provider": "spotify",
+      "external_id": "05FPlTIeC6njLa9lfH0tKr",
+      "external_type": "playlist",
+      "image_url": "https://mosaic.scdn.co/640/a1481a34d9a89fffc4f74ba2c10dd180349c6372e1186628b709496bf6c7933c459282c2c4151bd25a8ec98a8f7792eb15d30d3f5ff0155fa8d85ff7e83b19e81858bea51043db57420365ebe1a2cb53",
+      "num_items": 101
+    },
+    {
+      "id": 39,
+      "name": "Liked from Radio",
+      "provider": "spotify",
+      "external_id": "3Osh7qElUCZmPQgRnIEFCo",
+      "external_type": "playlist",
+      "image_url": "https://mosaic.scdn.co/640/2c38c0544fd880c6c9622210d299a598c52f3bce38e99691ebdf3772177e3a5d3a4c51935cdeebb0895a3dc15ea1b8fb3143c080aea55c96e36fed323545ace7c23112471d43d2144d048e7028aded56",
+      "num_items": 7
+    },
+    {
+      "id": 40,
+      "name": "Nothing But The Dance Party (feat Duke Dumont, Zedd, Swedish House Mafia, Avicii)",
+      "provider": "spotify",
+      "external_id": "6Uek2C5VrJ8abYXne8YrdI",
+      "external_type": "playlist",
+      "image_url": "https://u.scdn.co/images/pl/default/e17f4a128fca354bd6cbc33a661b54db4d4a0392",
+      "num_items": 71
+    }
+  ]
+}
+```
