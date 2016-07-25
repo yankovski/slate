@@ -429,8 +429,14 @@ This returns all the lists for the current user.
 
 `GET /lists`
 
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+type | Either `album` or `playlist`
+
 ```shell
-curl "/lists"
+curl "/lists?type=playlist"
   -H "Authorization: mysupersecrettokenhere"
 ```
 
@@ -483,6 +489,78 @@ curl "/lists"
       "external_type": "playlist",
       "image_url": "https://u.scdn.co/images/pl/default/e17f4a128fca354bd6cbc33a661b54db4d4a0392",
       "num_items": 71
+    }
+  ]
+}
+```
+
+## Tracks
+
+This returns all the tracks for the list.
+
+`GET /lists/1/tracks`
+
+```shell
+curl "/lists/1/tracks"
+  -H "Authorization: mysupersecrettokenhere"
+```
+
+> The above command returns status 200 and structure like this if successful
+
+```json
+{
+  "items": [
+    {
+      "id": 35,
+      "external_id": "2c6LUS1MUVUSJwWToVGmG4",
+      "name": "Idilio",
+      "external_type": "track",
+      "image_url": null,
+      "duration_ms": 310226,
+      "popularity": 4,
+      "created_at": "2016-06-21T04:32:49.047Z",
+      "updated_at": "2016-06-21T04:32:49.047Z"
+    },
+    {
+      "id": 36,
+      "external_id": "1LzycAdNif6ibMUZfG0431",
+      "name": "Vivir lo nuestro",
+      "external_type": "track",
+      "image_url": null,
+      "duration_ms": 367213,
+      "popularity": 52,
+      "created_at": "2016-06-21T04:32:49.050Z",
+      "updated_at": "2016-06-21T04:32:49.050Z"
+    }
+  ]
+}
+```
+
+# Artists
+
+## Index
+
+This returns all the artists for the current user.
+
+`GET /artists`
+
+```shell
+curl "/artists"
+  -H "Authorization: mysupersecrettokenhere"
+```
+
+> The above command returns status 200 and structure like this if successful
+
+```json
+{
+  "items": [
+    {
+      "id": 2,
+      "name": "Armin van Buuren",
+      "provider": "spotify",
+      "external_id": "0SfsnGyD8FpIN4U4WCkBZ5",
+      "image_url": "https://i.scdn.co/image/6204e504f408d6cf9822a70661609e4fac4cbe81",
+      "popularity": 72
     }
   ]
 }
