@@ -565,3 +565,59 @@ curl "/artists"
   ]
 }
 ```
+
+## Tracks
+
+This returns all the tracks for the artist.
+
+`GET /artists/1/tracks`
+
+```shell
+curl "/artists/1/tracks"
+  -H "Authorization: mysupersecrettokenhere"
+```
+
+> The above command returns status 200 and structure like this if successful
+
+```json
+{
+  "items": [
+    {
+      "id": 57945,
+      "external_id": "3HXH8MQqmYyMXizFkBPJNi",
+      "name": "A State Of Trance (ASOT 774) - Intro",
+      "external_type": "track",
+      "provider": "spotify",
+      "image_url": null,
+      "duration_ms": 83625,
+      "popularity": null,
+      "created_at": "2016-08-03T04:47:02.700Z",
+      "updated_at": "2016-08-03T04:47:02.700Z"
+    },
+    {
+      "id": 57947,
+      "external_id": "3WWVRnjgQZPsM0t2b0sYLQ",
+      "name": "A State Of Trance (ASOT 774) - Coming Up, Pt. 1",
+      "external_type": "track",
+      "provider": "spotify",
+      "image_url": null,
+      "duration_ms": 44665,
+      "popularity": null,
+      "created_at": "2016-08-03T04:47:32.655Z",
+      "updated_at": "2016-08-03T04:47:32.655Z"
+    },
+    {
+      "id": 57949,
+      "external_id": "2qZObFY6e0pMbLDyYnGAtM",
+      "name": "Heading Up High (ASOT 774) - Swanky Tunes Remix",
+      "external_type": "track",
+      "provider": "spotify",
+      "image_url": null,
+      "duration_ms": 207422,
+      "popularity": null,
+      "created_at": "2016-08-03T04:47:44.275Z",
+      "updated_at": "2016-08-03T04:47:44.275Z"
+    }
+  ]
+}
+```
