@@ -61,7 +61,8 @@ curl "/sessions/environment"
   "facebook_app_id": "1398162837618273",
   "spotify_client_id": "14d415257d794e76949f6e4f8b8fa34b",
   "youtube_client_id": "9827364793138-rjckfasfsadcqj9kgv2b0jjuragoo.apps.googleusercontent.com",
-  "soundcloud_client_id": "9akjsh3a6c1f7e901298347dd11f5341bf"
+  "soundcloud_client_id": "9akjsh3a6c1f7e901298347dd11f5341bf",
+  "deezer_client_id": 798471
 }
 ```
 
@@ -389,6 +390,36 @@ Parameter | Description
 code | Authorization code from soundcloud, to be exchanged for permanent access_token.
 callback_uri | Original uri sent to soundcloud when requesting code.
 
+## SoundCloud
+
+`POST /providers/deezer`
+
+```shell
+curl "/providers/deezer"
+  -H "Authorization: mysupersecrettokenhere"
+  -d code="fkajshfdjkj2h3k1jaksjdn"
+```
+
+> The above command returns status 200 when connection is successful
+
+```json
+```
+
+> The above command returns JSON structured like this when invalid:
+
+```json
+{
+  "wrong code": null
+}
+```
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+code | Authorization code from soundcloud, to be exchanged for permanent access_token.
+
+
 ## Destroy
 
 `DELETE /providers/<provider>`
@@ -436,7 +467,7 @@ Parameter | Description
 type | Either `album` or `playlist`
 
 ```shell
-curl "/lists?type=playlist"
+curl "/lists?type=album"
   -H "Authorization: mysupersecrettokenhere"
 ```
 
@@ -446,49 +477,42 @@ curl "/lists?type=playlist"
 {
   "items": [
     {
-      "id": 29,
-      "name": "Discover Weekly",
+      "id": 14364,
+      "name": "Let It Be (Remastered)",
       "provider": "spotify",
-      "external_id": "2e1FY03Oz92Tr3ll3uOFk5",
-      "external_type": "playlist",
-      "image_url": "https://u.scdn.co/images/pl/default/540efd75f5fc93c74787a375c39e4597c0975be8",
-      "num_items": 30
+      "external_id": "0jTGHV5xqHPvEcwL8f6YU5",
+      "external_type": "album",
+      "image_url": "https://i.scdn.co/image/b3651a85f2bca826b38194c51d09cd7b068aa3ab",
+      "num_items": null,
+      "artists": [
+        {
+          "id": 1589,
+          "name": "The Beatles",
+          "provider": "spotify",
+          "external_id": "3WrFJ7ztbogyGnTHbHJFl2",
+          "image_url": "https://i.scdn.co/image/934c57df9fbdbbaa5e93b55994a4cb9571fd2085",
+          "popularity": 84
+        }
+      ]
     },
     {
-      "id": 30,
-      "name": "G-DJ(merengue)",
+      "id": 14365,
+      "name": "Cheap Thrills (Remixes)",
       "provider": "spotify",
-      "external_id": "4kD5uFCn1x7ueKHtD5qQd3",
-      "external_type": "playlist",
-      "image_url": "https://i.scdn.co/image/f371f5617776d602b510c2ec614d1d1ee0bf16f1",
-      "num_items": 3
-    },
-    {
-      "id": 31,
-      "name": "G-Junior(salsa)",
-      "provider": "spotify",
-      "external_id": "05FPlTIeC6njLa9lfH0tKr",
-      "external_type": "playlist",
-      "image_url": "https://mosaic.scdn.co/640/a1481a34d9a89fffc4f74ba2c10dd180349c6372e1186628b709496bf6c7933c459282c2c4151bd25a8ec98a8f7792eb15d30d3f5ff0155fa8d85ff7e83b19e81858bea51043db57420365ebe1a2cb53",
-      "num_items": 101
-    },
-    {
-      "id": 39,
-      "name": "Liked from Radio",
-      "provider": "spotify",
-      "external_id": "3Osh7qElUCZmPQgRnIEFCo",
-      "external_type": "playlist",
-      "image_url": "https://mosaic.scdn.co/640/2c38c0544fd880c6c9622210d299a598c52f3bce38e99691ebdf3772177e3a5d3a4c51935cdeebb0895a3dc15ea1b8fb3143c080aea55c96e36fed323545ace7c23112471d43d2144d048e7028aded56",
-      "num_items": 7
-    },
-    {
-      "id": 40,
-      "name": "Nothing But The Dance Party (feat Duke Dumont, Zedd, Swedish House Mafia, Avicii)",
-      "provider": "spotify",
-      "external_id": "6Uek2C5VrJ8abYXne8YrdI",
-      "external_type": "playlist",
-      "image_url": "https://u.scdn.co/images/pl/default/e17f4a128fca354bd6cbc33a661b54db4d4a0392",
-      "num_items": 71
+      "external_id": "2NOa4do0Z6z3C6Zk6VniHb",
+      "external_type": "album",
+      "image_url": "https://i.scdn.co/image/f8f863775235350f2e1dae83025cc484d9eabcd5",
+      "num_items": null,
+      "artists": [
+        {
+          "id": 1590,
+          "name": "Sia",
+          "provider": "spotify",
+          "external_id": "5WUlDfRSoLAfcVSX1WnrxN",
+          "image_url": null,
+          "popularity": null
+        }
+      ]
     }
   ]
 }
@@ -505,36 +529,8 @@ curl "/lists/1/tracks"
   -H "Authorization: mysupersecrettokenhere"
 ```
 
-> The above command returns status 200 and structure like this if successful
+> The above command returns status 200 and a list of `Track` objects if successful
 
-```json
-{
-  "items": [
-    {
-      "id": 35,
-      "external_id": "2c6LUS1MUVUSJwWToVGmG4",
-      "name": "Idilio",
-      "external_type": "track",
-      "image_url": null,
-      "duration_ms": 310226,
-      "popularity": 4,
-      "created_at": "2016-06-21T04:32:49.047Z",
-      "updated_at": "2016-06-21T04:32:49.047Z"
-    },
-    {
-      "id": 36,
-      "external_id": "1LzycAdNif6ibMUZfG0431",
-      "name": "Vivir lo nuestro",
-      "external_type": "track",
-      "image_url": null,
-      "duration_ms": 367213,
-      "popularity": 52,
-      "created_at": "2016-06-21T04:32:49.050Z",
-      "updated_at": "2016-06-21T04:32:49.050Z"
-    }
-  ]
-}
-```
 
 # Artists
 
@@ -577,47 +573,109 @@ curl "/artists/1/tracks"
   -H "Authorization: mysupersecrettokenhere"
 ```
 
-> The above command returns status 200 and structure like this if successful
+> The above command returns status 200 and a list of `Track` objects if successful
+
+
+# Tracks
+
+## Track Object
 
 ```json
 {
   "items": [
     {
-      "id": 57945,
-      "external_id": "3HXH8MQqmYyMXizFkBPJNi",
-      "name": "A State Of Trance (ASOT 774) - Intro",
+      "id": 75426,
+      "external_id": "0eRyOunOVBChlXxIvqwOxH",
+      "name": "Dig It - Remastered",
       "external_type": "track",
       "provider": "spotify",
-      "image_url": null,
-      "duration_ms": 83625,
+      "image_url": "https://i.scdn.co/image/b3651a85f2bca826b38194c51d09cd7b068aa3ab",
+      "duration_ms": 50466,
       "popularity": null,
-      "created_at": "2016-08-03T04:47:02.700Z",
-      "updated_at": "2016-08-03T04:47:02.700Z"
+      "playback_info": "spotify:track:0eRyOunOVBChlXxIvqwOxH",
+      "preview_info": "https://p.scdn.co/mp3-preview/7fcb17fdd273bca3c37661e8f0d30446b9f87a31",
+      "created_at": "2016-10-03T02:23:53.569Z",
+      "updated_at": "2016-10-03T14:09:28.190Z",
+      "artists": [
+        {
+          "id": 5918,
+          "name": "The Beatles",
+          "provider": "spotify",
+          "external_id": "3WrFJ7ztbogyGnTHbHJFl2",
+          "image_url": "https://i.scdn.co/image/934c57df9fbdbbaa5e93b55994a4cb9571fd2085",
+          "popularity": null
+        }
+      ]
     },
     {
-      "id": 57947,
-      "external_id": "3WWVRnjgQZPsM0t2b0sYLQ",
-      "name": "A State Of Trance (ASOT 774) - Coming Up, Pt. 1",
+      "id": 75423,
+      "external_id": "4OUmlC67FoPLvQNuE5C7kF",
+      "name": "Dig A Pony - Remastered",
       "external_type": "track",
       "provider": "spotify",
-      "image_url": null,
-      "duration_ms": 44665,
+      "image_url": "https://i.scdn.co/image/b3651a85f2bca826b38194c51d09cd7b068aa3ab",
+      "duration_ms": 235000,
       "popularity": null,
-      "created_at": "2016-08-03T04:47:32.655Z",
-      "updated_at": "2016-08-03T04:47:32.655Z"
+      "playback_info": "spotify:track:4OUmlC67FoPLvQNuE5C7kF",
+      "preview_info": "https://p.scdn.co/mp3-preview/033f1c9d697b69749a63621bdc8a93a897a1d394",
+      "created_at": "2016-10-03T02:23:53.464Z",
+      "updated_at": "2016-10-03T14:09:28.084Z",
+      "artists": [
+        {
+          "id": 5918,
+          "name": "The Beatles",
+          "provider": "spotify",
+          "external_id": "3WrFJ7ztbogyGnTHbHJFl2",
+          "image_url": "https://i.scdn.co/image/934c57df9fbdbbaa5e93b55994a4cb9571fd2085",
+          "popularity": null
+        }
+      ]
     },
     {
-      "id": 57949,
-      "external_id": "2qZObFY6e0pMbLDyYnGAtM",
-      "name": "Heading Up High (ASOT 774) - Swanky Tunes Remix",
+      "id": 75421,
+      "external_id": "1A8DpCIimQB9bOunU43ezj",
+      "name": "Cheap Thrills - John \"J-C\" Carr Remix",
       "external_type": "track",
       "provider": "spotify",
-      "image_url": null,
-      "duration_ms": 207422,
+      "image_url": "https://i.scdn.co/image/f8f863775235350f2e1dae83025cc484d9eabcd5",
+      "duration_ms": 316026,
       "popularity": null,
-      "created_at": "2016-08-03T04:47:44.275Z",
-      "updated_at": "2016-08-03T04:47:44.275Z"
+      "playback_info": "spotify:track:1A8DpCIimQB9bOunU43ezj",
+      "preview_info": "https://p.scdn.co/mp3-preview/3f631c590c6ec79c6e2d7a17d5dba9e7fcd4fd0c",
+      "created_at": "2016-10-03T02:23:53.365Z",
+      "updated_at": "2016-10-03T14:09:14.674Z",
+      "artists": [
+        {
+          "id": 5917,
+          "name": "John J C Carr",
+          "provider": "spotify",
+          "external_id": "5gGoa8MFFvawLMeZU5GFB2",
+          "image_url": null,
+          "popularity": null
+        },
+        {
+          "id": 5908,
+          "name": "Sia",
+          "provider": "spotify",
+          "external_id": "5WUlDfRSoLAfcVSX1WnrxN",
+          "image_url": null,
+          "popularity": null
+        }
+      ]
     }
   ]
 }
 ```
+
+## Index
+
+This returns all the tracks for the user.
+
+`GET /tracks`
+
+```shell
+curl "/tracks"
+  -H "Authorization: mysupersecrettokenhere"
+```
+
+> The above command returns status 200 and a list of `Track` objects if successful
