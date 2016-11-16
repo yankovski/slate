@@ -390,7 +390,7 @@ Parameter | Description
 code | Authorization code from soundcloud, to be exchanged for permanent access_token.
 callback_uri | Original uri sent to soundcloud when requesting code.
 
-## SoundCloud
+## Deezer
 
 `POST /providers/deezer`
 
