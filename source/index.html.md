@@ -419,6 +419,29 @@ Parameter | Description
 --------- | -----------
 code | Authorization code from soundcloud, to be exchanged for permanent access_token.
 
+## Deezer via token
+
+This lets the client obtain a token directly from Deezer and give it to the backend to be used. The access token is assumed to be never expire.
+
+`POST /providers/deezer_token`
+
+```shell
+curl "/providers/deezer_token"
+  -H "Authorization: mysupersecrettokenhere"
+  -d access_token="fkajshfdjkj2h3k1jaksjdnasdhaksdhakjsdh312ajskd2"
+```
+
+> The above command returns status 200 when connection is successful
+
+```json
+```
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+code | Authorization code from soundcloud, to be exchanged for permanent access_token.
+
 
 ## Destroy
 
