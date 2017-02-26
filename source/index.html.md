@@ -440,7 +440,7 @@ curl "/providers/deezer_token"
 
 Parameter | Description
 --------- | -----------
-code | Authorization code from soundcloud, to be exchanged for permanent access_token.
+access_token | A permanent access_token which was obtained from deezer.
 
 
 ## Destroy
@@ -702,3 +702,68 @@ curl "/tracks"
 ```
 
 > The above command returns status 200 and a list of `Track` objects if successful
+
+# Search
+
+Search is the same accross all providers
+
+`GET /search`
+
+```shell
+curl "/search"
+  -H "Authorization: mysupersecrettokenhere"
+```
+
+> The above command returns status 200 and structure like this if successful
+
+```json
+{
+  "items": {
+    "total": 2397,
+    "prev_page": 0,
+    "next_page": 3,
+    "items": [
+      {
+        "name": "Beatles",
+        "external_id": "4Fjpu1v8bB3gBwutekOGRP",
+        "num_items": 79,
+        "external_type": "playlist",
+        "image_url": "https://i.scdn.co/image/9ecfdf528562cae879748b73bd81b64dfa3d5704",
+        "owner": "1218940119"
+      },
+      {
+        "name": "beatles",
+        "external_id": "2mxs6Dos203iTEa3pnoKTu",
+        "num_items": 186,
+        "external_type": "playlist",
+        "image_url": "https://mosaic.scdn.co/640/2782d94528b449fb6910300cc8c8f93ab8cc7a8db3651a85f2bca826b38194c51d09cd7b068aa3abc429243cd056974175abe72a3142d3dccffc166a5efcba83e06ce03ca843b459a4189f861ddc5f23",
+        "owner": "jack_hall_"
+      },
+      {
+        "name": "Beatles Greatest Hits",
+        "external_id": "1FbXE0DKfcNlIRexSEHcs8",
+        "num_items": 50,
+        "external_type": "playlist",
+        "image_url": "https://mosaic.scdn.co/640/9cab76ad73ce2adbacbd118ebc632255ce7c1841809c6f28db643023d76b9cb650a8ea59689a3af20c268e33b8ea23b90b8debba71ecfe83195ed8659ecfdf528562cae879748b73bd81b64dfa3d5704",
+        "owner": "beatlesplaylists"
+      }
+    ]
+  }
+}
+```
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+provider | spotify/deezer/youtube/soundcloud
+section | Possible sections vary by provider. See below.
+        | spotify: track/album/artist/playlist
+        | youtube: video/channel/playlist
+        | soundcloud: track/playlist/artist
+        | deezer: track/album/artist/playlist
+query | What to search for? E.g. 'Beatles'
+limit | results per page to return (best to keep low, but limits vary between providers
+page | This is an optional page token (not page number). See `next_page`/`prev_page` in the results
+
+
