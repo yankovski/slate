@@ -707,11 +707,15 @@ curl "/tracks"
 
 Search is the same accross all providers
 
-`GET /search`
+`POST /search`
 
 ```shell
 curl "/search"
   -H "Authorization: mysupersecrettokenhere"
+  -d provider="spotify"
+  -d section="artist"
+  -d query="beatles"
+  -d limit="3"
 ```
 
 > The above command returns status 200 and structure like this if successful
@@ -759,11 +763,187 @@ Parameter | Description
 provider | spotify/deezer/youtube/soundcloud
 section | Possible sections vary by provider. See below.
         | spotify: track/album/artist/playlist
-        | youtube: video/channel/playlist
-        | soundcloud: track/playlist/artist
+        | youtube: track/artist/playlist
+        | soundcloud: track/artist/playlist
         | deezer: track/album/artist/playlist
 query | What to search for? E.g. 'Beatles'
 limit | results per page to return (best to keep low, but limits vary between providers
 page | This is an optional page token (not page number). See `next_page`/`prev_page` in the results
+
+# Search Details
+
+Search drill down for retrieving tracks
+
+`GET /search/details`
+
+```shell
+curl "/search/details?provider=youtube&section=artist&external_id=UC4dqLAF7yT-_DqeYisQ001w&limit=3"
+  -H "Authorization: mysupersecrettokenhere"
+```
+
+> The above command returns status 200 and structure like this if successful
+
+```json
+{
+  "items": {
+    "total": 50,
+    "prev_page": null,
+    "next_page": "CAMQAA",
+    "items": [
+      {
+        "name": "The Beatles - Eleanor Rigby (From \"Yellow Submarine\")",
+        "external_id": "HuS5NuXRb5Y",
+        "external_type": "video",
+        "image_url": "https://i.ytimg.com/vi/HuS5NuXRb5Y/hqdefault.jpg",
+        "artists": [
+          {
+            "external_id": "UC4dqLAF7yT-_DqeYisQ001w",
+            "name": "The Beatles - Eleanor Rigby (From \"Yellow Submarine\")",
+            "image_url": "https://i.ytimg.com/vi/HuS5NuXRb5Y/hqdefault.jpg"
+          }
+        ]
+      },
+      {
+        "name": "The Beatles - We Can Work it Out",
+        "external_id": "Qyclqo_AV2M",
+        "external_type": "video",
+        "image_url": "https://i.ytimg.com/vi/Qyclqo_AV2M/hqdefault.jpg",
+        "artists": [
+          {
+            "external_id": "UC4dqLAF7yT-_DqeYisQ001w",
+            "name": "The Beatles - We Can Work it Out",
+            "image_url": "https://i.ytimg.com/vi/Qyclqo_AV2M/hqdefault.jpg"
+          }
+        ]
+      },
+      {
+        "name": "The Beatles - Penny Lane",
+        "external_id": "S-rB0pHI9fU",
+        "external_type": "video",
+        "image_url": "https://i.ytimg.com/vi/S-rB0pHI9fU/hqdefault.jpg",
+        "artists": [
+          {
+            "external_id": "UC4dqLAF7yT-_DqeYisQ001w",
+            "name": "The Beatles - Penny Lane",
+            "image_url": "https://i.ytimg.com/vi/S-rB0pHI9fU/hqdefault.jpg"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+provider | spotify/deezer/youtube/soundcloud
+section | Possible sections vary by provider. See below.
+        | spotify: album/playlist*
+        | youtube: artist/playlist
+        | soundcloud: artist/playlist**
+        | deezer: album/playlist
+external_id | The id of the `section`
+limit | results per page to return (best to keep low, but limits vary between providers
+page | This is an optional page token (not page number). See `next_page`/`prev_page` in the results
+*playlist_owner_id is only required when retrieving spotify playlist tracks.
+
+**The SC API doesn't always return some or all playlist items. At times these are protected by the users.
+
+# Artist Details (Unified Artists)
+
+Get a lot of details about a specific artist
+
+`POST /artist_details`
+
+```shell
+curl "/search"
+  -H "Authorization: mysupersecrettokenhere"
+  -d provider="spotify"
+  -d artist_id="43ZHCT0cAZBISjO8DG9PnE"
+```
+
+> The above command returns status 200 and structure like this if successful
+
+```json
+{
+  "items": {
+    "albums": [
+      {
+        "name": "The Wonder of You: Elvis Presley with the Royal Philharmonic Orchestra",
+        "external_id": "6oWz2hJ89n9mKarg3SO9ou",
+        "external_type": "album",
+        "image_url": "https://i.scdn.co/image/a07ca4453d11da5c73239a936aa154238106fd68"
+      },
+      {
+        "name": "The Wonder of You: Elvis Presley with the Royal Philharmonic Orchestra",
+        "external_id": "2kTL2bkqCBKBTLzXfZPGF7",
+        "external_type": "album",
+        "image_url": "https://i.scdn.co/image/eb8a80a5d7f3d9adab42010c1f8d33cab4a355d1"
+      }
+    ],
+    "top_tracks": [
+      {
+        "name": "Can't Help Falling in Love",
+        "external_id": "44AyOl4qVkzS48vBsbNXaC",
+        "external_type": "track",
+        "image_url": "https://i.scdn.co/image/4295b5ff74d4f944367144acbe616b6f62d20b17",
+        "duration_ms": 179773,
+        "popularity": 69,
+        "playback_info": "spotify:track:44AyOl4qVkzS48vBsbNXaC",
+        "preview_info": "https://p.scdn.co/mp3-preview/26e409b39a2da6dc18fab61020c90be2938dc0e9?cid=14d415257d794e76949f6e4f8b8fa34b"
+      },
+      {
+        "name": "Jailhouse Rock",
+        "external_id": "4gphxUgq0JSFv2BCLhNDiE",
+        "external_type": "track",
+        "image_url": "https://i.scdn.co/image/31301ae33f6ec1ca0f86edec54a9a7be14c78310",
+        "duration_ms": 146480,
+        "popularity": 63,
+        "playback_info": "spotify:track:4gphxUgq0JSFv2BCLhNDiE",
+        "preview_info": "https://p.scdn.co/mp3-preview/29990f669b5328b6c40320596a2b14d8660cdb54?cid=14d415257d794e76949f6e4f8b8fa34b"
+      }
+    ],
+    "related_artists": [
+      {
+        "external_id": "0JDkhL4rjiPNEp92jAgJnS",
+        "image_url": "https://i.scdn.co/image/684f6d45078b404e6b82e2c84f82859035dd3e3c",
+        "name": "Roy Orbison",
+        "popularity": 63
+      },
+      {
+        "external_id": "3wYyutjgII8LJVVOLrGI0D",
+        "image_url": "https://i.scdn.co/image/ff6c6ecd90618f5fb0f8fbf51bf8477586c8843b",
+        "name": "Buddy Holly",
+        "popularity": 57
+      },
+      {
+        "external_id": "2zyz0VJqrDXeFDIyrfVXSo",
+        "image_url": "https://i.scdn.co/image/e7505a9ef8849b2686ec759082b63c37d67c6d54",
+        "name": "Jerry Lee Lewis",
+        "popularity": 56
+      }
+    ]
+  }
+}
+```
+
+### Sections
+
+Provider | Sections
+-------- | --------
+spotify | albums, top_tracks, related_artists
+soundcloud | tracks, playlists, followers
+deezer | top_tracks, albums, fans, related, playlists
+youtube | likes, favorites, uploads
+
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+provider | spotify/deezer/youtube/soundcloud
+artist_id | external id of the artist (Provider-specific)
 
 
