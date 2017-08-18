@@ -847,8 +847,7 @@ section | Possible sections vary by provider. See below.
 external_id | The id of the `section`
 limit | results per page to return (best to keep low, but limits vary between providers
 page | This is an optional page token (not page number). See `next_page`/`prev_page` in the results
-*playlist_owner_id is only required when retrieving spotify playlist tracks.
-
+*playlist_owner_id | This additional param is only required when retrieving spotify playlist tracks.
 **The SC API doesn't always return some or all playlist items. At times these are protected by the users.
 
 # Artist Details (Unified Artists)
@@ -936,7 +935,7 @@ Provider | Sections
 spotify | albums, top_tracks, related_artists
 soundcloud | tracks, playlists, followers
 deezer | top_tracks, albums, fans, related, playlists
-youtube | likes, favorites, uploads
+youtube | recent, popular, playlists
 
 
 ### URL Parameters
@@ -945,5 +944,54 @@ Parameter | Description
 --------- | -----------
 provider | spotify/deezer/youtube/soundcloud
 artist_id | external id of the artist (Provider-specific)
+artist_name | if artist_id (above) is not specified, a search by name will be performed.
 
+# Discovery
+
+Get information about trending, top tracks, etc., from each provider
+
+`GET /discover`
+
+```shell
+curl "/discover?provider=deezer"
+  -H "Authorization: mysupersecrettokenhere"
+```
+
+> The above command returns status 200 and structure like this if successful
+
+```json
+{
+  "items": {
+    "albums": [
+      {
+        "name": "Give Up (Deluxe 10th Anniversary Edition)",
+        "external_id": 7490438,
+        "external_type": "album",
+        "image_url": "https://e-cdns-images.dzcdn.net/images/cover/574136e478bf98865ac46bcca9448df0/1000x1000-000000-80-0-0.jpg",
+        "artists": null
+      },
+      {
+        "name": "Face to Face",
+        "external_id": 42131201,
+        "external_type": "album",
+        "image_url": "https://e-cdns-images.dzcdn.net/images/cover/058bdbd20fb233fa31a3614e488442ea/1000x1000-000000-80-0-0.jpg",
+        "artists": null
+      },
+      {
+        "name": "Loom",
+        "external_id": 15357919,
+        "external_type": "album",
+        "image_url": "https://e-cdns-images.dzcdn.net/images/cover/2eec007cdc04199368b2e1ea9343342e/1000x1000-000000-80-0-0.jpg",
+        "artists": null
+      }
+    ]
+  }
+}
+```
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+provider | spotify/deezer/soundcloud (note youtube is not supported for now)
 
