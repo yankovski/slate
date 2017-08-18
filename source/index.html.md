@@ -541,6 +541,146 @@ curl "/lists?type=album"
 }
 ```
 
+## Create
+
+This creates a custom playlist for the user.
+
+`POST /lists`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+name | String
+
+```shell
+curl "/lists?name=Classics"
+  -H "Authorization: mysupersecrettokenhere"
+  -X POST
+```
+
+> The above command returns status 200 and structure like this if successful
+
+```json
+{
+  "id": 14365,
+  "name": "Classics",
+  "provider": null,
+  "external_id": null,
+  "external_type": "playlist",
+  "image_url": null,
+  "num_items": 0,
+  "user_id": 10
+}
+```
+
+## Custom Playlists
+
+This fetches custom playlists the user created.
+
+`GET /lists/custom_playlists`
+
+```shell
+curl "/lists/custom_playlists"
+  -H "Authorization: mysupersecrettokenhere"
+```
+
+> The above command returns status 200 and structure like this if successful
+
+```json
+[
+{
+  "id": 14365,
+  "name": "Classics",
+  "provider": null,
+  "external_id": null,
+  "external_type": "playlist",
+  "image_url": null,
+  "num_items": 0,
+  "user_id": 10
+}
+]
+
+```
+
+## Rename
+
+This renames a custom playlist.
+
+`POST /lists/:identifier/rename`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+name | String
+
+```shell
+curl "/lists/10000/rename?name=Piano"
+  -H "Authorization: mysupersecrettokenhere"
+  -X POST
+```
+
+> The above command returns status 200 and structure like this if successful
+
+```json
+{
+  "id": 14365,
+  "name": "Classic",
+  "provider": null,
+  "external_id": null,
+  "external_type": "playlist",
+  "image_url": null,
+  "num_items": 0,
+  "user_id": 10
+}
+```
+
+## Add Track
+
+This adds a track to a custom playlist.
+
+`POST /lists/:identifier/add_track?track_id=:track_identifier&provider=:provider`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+identifier | List identifier.
+track_identifier | External track identifier.
+provider | Provider name (lowercase).
+
+```shell
+curl "/lists/100/add_track?track_id=1031&provider=spotify"
+  -H "Authorization: mysupersecrettokenhere"
+  -X POST
+```
+
+> The above command returns status 200 and a `List` object if successful.
+
+## Remove Track
+
+This removesf a track from a custom playlist.
+
+`POST /lists/:identifier/remove_track?track_id=:track_identifier`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+identifier | List identifier.
+track_identifier | External track identifier.
+provider | Provider name (lowercase).
+
+```shell
+curl "/lists/100/remove_track?track_id=1031"
+  -H "Authorization: mysupersecrettokenhere"
+  -X POST
+```
+
+> The above command returns status 200 if successful.
+
+
 ## Tracks
 
 This returns all the tracks for the list.
@@ -702,6 +842,51 @@ curl "/tracks"
 ```
 
 > The above command returns status 200 and a list of `Track` objects if successful
+
+# Saving Objects
+
+## Add
+
+This saves an object.
+
+`POST /:playce_type/add?provider=provider&identifier=:identifier&type=:type`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+playce_type | Type of object in Playce (`tracks`, `lists`, `artists`).
+provider | Provider name (lowercase).
+identifier | External identifier for object.
+type | Object type.
+
+```shell
+curl "/lists/add?&provider=spotify&identifier=1234&type=albums"
+  -H "Authorization: mysupersecrettokenhere"
+  -X POST
+```
+
+> The above command returns status 200 and the created object if successful.
+
+## Remove
+
+This removes an object.
+
+`POST /:playce_type/remove?identifier=:identifier`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+identifier | External identifier for object.
+
+```shell
+curl "/lists/add?&identifier=1234"
+  -H "Authorization: mysupersecrettokenhere"
+  -X POST
+```
+
+> The above command returns status 200 if successful.
 
 # Search
 
